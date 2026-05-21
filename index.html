@@ -727,19 +727,13 @@ function renderThumbs(){
   var slides=buildSlides(p);
   var gc=GRAD_CSS[p.gradient]||GRAD_CSS.g0;
   document.getElementById('v-thumbs').innerHTML=slides.map(function(s,i){
-    return '<div class="slide-thumb'+(i===currentSlide?' active':'')+'" onclick="goSlide('+i+')">'
-      +'<div class="slide-thumb-inner" style="background:'+(s.type==='content'?'#f8f7ff':gc)+';opacity:'+(i===currentSlide?1:.55)+'">'
-      +(s.type==='cover'&&p.thumbnail?'<img src="'+esc(p.thumbnail)+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.7" onerror="this.style.display=\'none\'" alt=""/>':'')
-      +'<span style="color:'+(s.type==='content'?'#444':'rgba(255,255,255,.85)');
-  }).join('')+'</div>';
-  // fix: rebuild properly
-  document.getElementById('v-thumbs').innerHTML=slides.map(function(s,i){
     var bg=s.type==='content'?'#f8f7ff':gc;
     var textColor=s.type==='content'?'#444':'rgba(255,255,255,.85)';
     var label=s.type==='cover'?'Cover':s.type==='insight'?s.num:(s.header||s.type).slice(0,16);
+    var thumbImg=(s.type==='cover'&&p.thumbnail)?'<img src="'+esc(p.thumbnail)+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.7" onerror="this.style.display='none'" alt=""/>':'';
     return '<div class="slide-thumb'+(i===currentSlide?' active':'')+'" onclick="goSlide('+i+')">'
       +'<div class="slide-thumb-inner" style="background:'+bg+';opacity:'+(i===currentSlide?1:.55)+'">'
-      +(s.type==='cover'&&p.thumbnail?'<img src="'+esc(p.thumbnail)+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.7" onerror="this.style.display=\'none\'" alt=""/>':'')
+      +thumbImg
       +'<span style="color:'+textColor+'">'+esc(label)+'</span>'
       +'<div class="slide-num">'+(i+1)+'</div>'
       +'</div></div>';
